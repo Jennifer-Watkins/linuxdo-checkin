@@ -12,15 +12,23 @@
 本节只介绍在github actions中如何使用。在进行之前需要先fork本项目。
 
 ### 设置环境变量
-在使用此自动化脚本之前，需要在 GitHub 仓库中配置两个环境变量 `USERNAME` 和 `PASSWORD`，这两个变量将用于登录 LinuxDo。按照以下步骤设置：
+在使用此自动化脚本之前，需要在 GitHub 仓库中配置用户信息。本项目支持多用户配置，按照以下格式设置：
 
 1. 登录 GitHub，进入你的项目仓库。
 2. 点击仓库的 `Settings` 选项卡。
 3. 在左侧菜单中找到 `Secrets and variables` 部分，点击 `Actions`。
 4. 点击 `New repository secret` 按钮。
-5. 分别添加 `USERNAME` 和 `PASSWORD`：
-   - 在 `Name` 字段中输入 `USERNAME`，在 `Value` 字段中输入你的 LinuxDo 用户名或者邮箱。
-   - 重复上述步骤，这次输入 `PASSWORD` 作为 `Name`，相应的密码作为 `Value`。
+5. 为每个用户添加对应的环境变量：
+   - 第一个用户：`USERNAME_1` 和 `PASSWORD_1`
+   - 第二个用户：`USERNAME_2` 和 `PASSWORD_2`
+   - 第三个用户：`USERNAME_3` 和 `PASSWORD_3`
+   - 以此类推...
+
+例如，要添加第一个用户：
+   - 在 `Name` 字段中输入 `USERNAME_1`，在 `Value` 字段中输入该用户的 LinuxDo 用户名或邮箱
+   - 再添加一个 secret，`Name` 为 `PASSWORD_1`，`Value` 为对应的密码
+
+你可以按照这个格式继续添加更多用户（USERNAME_2/PASSWORD_2, USERNAME_3/PASSWORD_3 等）。
 
 ### GitHub Actions 自动运行
 此项目的 GitHub Actions 配置会自动每天 UTC 时间1点运行签到脚本。你无需进行任何操作即可启动此自动化任务。GitHub Actions 的工作流文件位于 `.github/workflows` 目录下，文件名为 `daily-check-in.yml`。

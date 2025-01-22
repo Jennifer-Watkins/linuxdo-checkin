@@ -2,7 +2,7 @@ name: Daily Check-in
 
 on:
   schedule:
-    - cron: '0 */12 * * *'  # 每12时执行一次
+    - cron: '0 */12 * * *'  # 每12小时执行一次
   workflow_dispatch:
 
 jobs:
@@ -24,8 +24,11 @@ jobs:
 
       - name: Execute script
         env:
-          USERNAME: ${{ secrets.USERNAME }}
-          PASSWORD: ${{ secrets.PASSWORD }}
+          USERNAME_1: ${{ secrets.USERNAME_1 }}
+          PASSWORD_1: ${{ secrets.PASSWORD_1 }}
+          USERNAME_2: ${{ secrets.USERNAME_2 }}
+          PASSWORD_2: ${{ secrets.PASSWORD_2 }}
+          # 可以继续添加更多用户...
         run: |
           python main.py
 
@@ -38,7 +41,7 @@ jobs:
           curl -s -X POST "https://api.telegram.org/bot${{ env.TELEGRAM_TOKEN }}/sendMessage" \
           -d chat_id=${{ env.TELEGRAM_USERID }} \
           -d parse_mode=HTML \
-          -d text="✅ <b>LINUX DO</b> 每日签到成功完成"
+          -d text="✅ <b>LINUX DO</b> 多用户每日签到成功完成"
 
       - name: Send Failure Notification
         env:
@@ -49,7 +52,7 @@ jobs:
           curl -s -X POST "https://api.telegram.org/bot${{ env.TELEGRAM_TOKEN }}/sendMessage" \
           -d chat_id=${{ env.TELEGRAM_USERID }} \
           -d parse_mode=HTML \
-          -d text="❌ <b>LINUX DO</b> 每日签到失败"
+          -d text="❌ <b>LINUX DO</b> 多用户每日签到失败"
 
       - name: Delete workflow runs
         uses: Mattraks/delete-workflow-runs@v2
